@@ -1,0 +1,133 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type Category {
+  id: Int!
+  name: String!
+  description: String!
+  checklists: [Checklist!]
+}
+
+type ChecklistItem {
+  id: Int!
+  task: String!
+  completed: Boolean!
+  description: String!
+  checklist: Checklist
+  checklists: [ChecklistItem!]
+}
+
+type Checklist {
+  id: Int!
+  name: String!
+  completed: Boolean!
+  description: String!
+  category: Category
+  user: User
+  checklistItems: [ChecklistItem!]
+}
+
+type User {
+  id: Int!
+  name: String!
+  role: String!
+  email: String!
+  checklists: [Checklist!]
+}
+
+type Comment {
+  id: Int!
+  text: String!
+  photoLink: String
+  videoLink: String
+  user: User!
+  challenge: Challenge!
+}
+
+type Challenge {
+  id: Int!
+  title: String!
+  description: String!
+  points: Int!
+  photoLink: String
+  videoLink: String
+  category: Category!
+  comments: [Comment!]
+  users: [User!]
+}
+
+type Query {
+  users: [User!]!
+  user(id: Int!): User!
+  category(id: Int!): Category!
+  checklist(id: Int!): Checklist!
+  checklistItem(id: Int!): ChecklistItem!
+}
+
+type Mutation {
+  createUser(createUserInput: CreateUserInput!): User!
+  updateUser(updateUserInput: UpdateUserInput!): User!
+  removeUser(id: Int!): User!
+  createCategory(createCategoryInput: CreateCategoryInput!): Category!
+  updateCategory(updateCategoryInput: UpdateCategoryInput!): Category!
+  removeCategory(id: Int!): Category!
+  createChecklist(createChecklistInput: CreateChecklistInput!): Checklist!
+  updateChecklist(updateChecklistInput: UpdateChecklistInput!): Checklist!
+  removeChecklist(id: Int!): Checklist!
+  createChecklistItem(createChecklistItemInput: CreateChecklistItemInput!): ChecklistItem!
+  updateChecklistItem(updateChecklistItemInput: UpdateChecklistItemInput!): ChecklistItem!
+  removeChecklistItem(id: Int!): ChecklistItem!
+}
+
+input CreateUserInput {
+  name: String!
+  role: String!
+  email: String!
+}
+
+input UpdateUserInput {
+  name: String
+  role: String
+  email: String
+  id: Int!
+}
+
+input CreateCategoryInput {
+  name: String!
+  description: String!
+}
+
+input UpdateCategoryInput {
+  name: String
+  description: String
+  id: Int!
+}
+
+input CreateChecklistInput {
+  id: Int!
+  name: String!
+  completed: Boolean!
+  description: String!
+}
+
+input UpdateChecklistInput {
+  id: Int!
+  name: String
+  completed: Boolean
+  description: String
+}
+
+input CreateChecklistItemInput {
+  id: Int!
+  task: String!
+  completed: Boolean!
+  description: String!
+}
+
+input UpdateChecklistItemInput {
+  id: Int!
+  task: String
+  completed: Boolean
+  description: String
+}
