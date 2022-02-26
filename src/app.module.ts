@@ -10,27 +10,48 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { ApolloServerPluginLandingPageLocalDefault } from 'apollo-server-core';
 import { ChecklistModule } from './checklist/checklist.module';
 import { ChecklistItemModule } from './checklist-item/checklist-item.module';
+import { ConfigModule } from '@nestjs/config';
+import { AuthModule } from './auth/auth.module';
+import { PassportModule } from '@nestjs/passport';
+
+let envFilePath = '.env.dev';
+let synchronizeBool = true;
+
+console.log(`Running in ${process.env.ENVIRONMENT}`)
+if (process.env.ENVIRONMENT === 'production') {
+  envFilePath = '.env.prod';
+  synchronizeBool = false;
+}
 
 @Module({
   imports: [
+    ConfigModule.forRoot({envFilePath}),
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
       playground: false,
       plugins: [ApolloServerPluginLandingPageLocalDefault()],
       autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
     }),
+    PassportModule.register({session: true}),
     TypeOrmModule.forRoot({
-      type: 'sqlite',
-      database: ':memory:',
+      type: 'mysql',
+      host: 'localhost',
+      port: 3306,
+      username: 'root',
+      password: 'root',
+      database: 'test',
       entities: ['dist/**/*.entity{.ts,.js}'],
-      synchronize: true, // don't use true for prod
+      synchronize: synchronizeBool, // don't use true for prod
     }),
     UserModule,
     CategoryModule,
     ChecklistModule,
     ChecklistItemModule,
+    AuthModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [
+    AppService
+  ],
 })
 export class AppModule {}

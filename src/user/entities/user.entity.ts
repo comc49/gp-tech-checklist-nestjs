@@ -11,16 +11,23 @@ export class User {
 
   @Column()
   @Field()
-  name: string;
+  firstName: string;
 
   @Column()
   @Field()
-  role: string;
+  lastName: string;
+
+  @Column()
+  @Field()
+  picture: string;
 
   @Column({ unique: true })
   @Field()
   email: string;
 
+  @Column({ name: 'access_token' })
+  @Field()
+  accessToken: string;
 
   @OneToMany(() => Checklist, checklist => checklist.user )
   @Field(type => [Checklist], {nullable: true})

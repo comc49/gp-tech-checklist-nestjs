@@ -30,9 +30,11 @@ type Checklist {
 
 type User {
   id: Int!
-  name: String!
-  role: String!
+  firstName: String!
+  lastName: String!
+  picture: String!
   email: String!
+  accessToken: String!
   checklists: [Checklist!]
 }
 
@@ -81,15 +83,19 @@ type Mutation {
 }
 
 input CreateUserInput {
-  name: String!
-  role: String!
+  firstName: String!
+  lastName: String!
   email: String!
+  picture: String!
+  accessToken: String!
 }
 
 input UpdateUserInput {
-  name: String
-  role: String
+  firstName: String
+  lastName: String
   email: String
+  picture: String
+  accessToken: String
   id: Int!
 }
 
