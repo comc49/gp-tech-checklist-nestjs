@@ -5,11 +5,13 @@ import { AuthController } from './auth.controller';
 import { GoogleStrategy } from './strageties/google.strategy';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from 'src/user/entities/user.entity';
+import { SessionSerializer } from './utils/Serializer';
 
 @Module({
   providers: [
     AuthResolver,
     GoogleStrategy,
+    SessionSerializer,
     {
       provide: 'AUTH_SERVICE',
       useClass: AuthService

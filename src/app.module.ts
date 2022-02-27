@@ -26,12 +26,6 @@ if (process.env.ENVIRONMENT === 'production') {
 @Module({
   imports: [
     ConfigModule.forRoot({envFilePath}),
-    GraphQLModule.forRoot<ApolloDriverConfig>({
-      driver: ApolloDriver,
-      playground: false,
-      plugins: [ApolloServerPluginLandingPageLocalDefault()],
-      autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
-    }),
     PassportModule.register({session: true}),
     TypeOrmModule.forRoot({
       type: 'mysql',
@@ -42,6 +36,12 @@ if (process.env.ENVIRONMENT === 'production') {
       database: 'test',
       entities: ['dist/**/*.entity{.ts,.js}'],
       synchronize: synchronizeBool, // don't use true for prod
+    }),
+    GraphQLModule.forRoot<ApolloDriverConfig>({
+      driver: ApolloDriver,
+      playground: false,
+      plugins: [ApolloServerPluginLandingPageLocalDefault()],
+      autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
     }),
     UserModule,
     CategoryModule,

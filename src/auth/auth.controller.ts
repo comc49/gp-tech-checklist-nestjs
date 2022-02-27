@@ -1,7 +1,7 @@
 import { Controller, Get, Inject, Req, Res, UseGuards } from '@nestjs/common';
-import { AuthGuard } from '@nestjs/passport';
+import { Response, Request } from 'express';
 import { AuthenticationProvider } from './auth';
-import { AuthService } from './auth.service';
+import { AuthenticatedGuard, GoogleAuthGuard } from './utils/Guards';
 
 @Controller('auth')
 export class AuthController {
@@ -9,18 +9,27 @@ export class AuthController {
 
 
     @Get('login')
-    @UseGuards(AuthGuard('google'))
-    async googleAuth(@Req() req) {}
-
-    @Get('status')
-    status() {
+    @UseGuards(GoogleAuthGuard)
+    async googleAuth(@Req() req) {
         return;
     }
 
+    @Get('status')
+    @UseGuards(AuthenticatedGuard)
+    status(@Req() req: Request) {
+      return req.user;
+    }
+
     @Get('redirect')
-    @UseGuards(AuthGuard('google'))
-    googleAuthRedirect(@Req() req) {
-        return this.authService.googleLogin(req)
+    @UseGuards(GoogleAuthGuard)
+    googleRedirect(@Res() res: Response) {
+        res.redirect('http://localhost:3000/');
+    }
+
+    @Get('logout')
+    @UseGuards(AuthenticatedGuard)
+    logout(@Req() req: Request) {
+      req.logOut();
     }
 
 }

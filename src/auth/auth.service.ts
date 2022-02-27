@@ -24,7 +24,7 @@ export class AuthService implements AuthenticationProvider {
     const { email } = details;
 
     const user = await this.userRepo.findOne({email})
-    console.log(user, ' user in validate User');
+    // console.log(user, ' user in validate User');
     
     if (user) {
       await this.userRepo.update({ email }, details);
@@ -38,7 +38,7 @@ export class AuthService implements AuthenticationProvider {
   async createUser(details: UserDetails) {
     console.log('Creating a User');
     const user = await this.userRepo.create(details);
-    console.log(user, 'user ');
+    // console.log(user, 'user ');
     return this.userRepo.save(user);
       
   }

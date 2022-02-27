@@ -12,14 +12,17 @@ async function bootstrap() {
   const sessionRepo = getRepository(TypeORMSession);
 
   app.enableCors({
-    origin: ['http://localhost:3000'],
-    credentials: true,
+    origin: [
+      'http://localhost:3000',
+      'https://studio.apollographql.com'
+    ],
+    credentials: false,
   });
   app.setGlobalPrefix('api');
   app.use(
     session({
       cookie: {
-        maxAge: 86400000,
+        maxAge: 10000,
       },
       secret: process.env.COOKIE_SECRET,
       resave: false,
