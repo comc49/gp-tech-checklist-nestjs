@@ -11,7 +11,7 @@ export class GoogleStrategy extends PassportStrategy(Strategy, 'google') {
     super({
       clientID: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_SECRET,
-      callbackURL: 'http://localhost:3000/api/auth/redirect',
+      callbackURL: 'http://localhost:3001/api/auth/redirect',
       scope: ['email', 'profile'],
     });
   }

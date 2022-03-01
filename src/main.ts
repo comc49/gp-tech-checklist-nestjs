@@ -8,17 +8,19 @@ import { TypeORMSession } from './typeorm/entities/Session.entity';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  const PORT = process.env.PORT || 3000;
+  const PORT = process.env.PORT || 3001;
   const sessionRepo = getRepository(TypeORMSession);
 
-  app.enableCors({
-    origin: [
-      'http://localhost:3000',
-      'https://studio.apollographql.com'
-    ],
-    credentials: false,
-  });
+  app.enableCors();
+  // app.enableCors({
+  //   origin: [
+  //     'http://localhost:3000',
+  //     'https://studio.apollographql.com'
+  //   ],
+  //   credentials: false,
+  // });
   app.setGlobalPrefix('api');
+  app.use(passport.initialize());
   app.use(
     session({
       cookie: {
@@ -30,8 +32,8 @@ async function bootstrap() {
       store: new TypeormStore().connect(sessionRepo),
     }),
   );
-  app.use(passport.initialize());
   app.use(passport.session());
+  console.log(`Running in ${PORT}`);
 
   await app.listen(PORT);
 }
