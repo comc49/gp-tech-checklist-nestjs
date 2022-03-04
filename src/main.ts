@@ -11,14 +11,13 @@ async function bootstrap() {
   const PORT = process.env.PORT || 3001;
   const sessionRepo = getRepository(TypeORMSession);
 
-  app.enableCors();
-  // app.enableCors({
-  //   origin: [
-  //     'http://localhost:3000',
-  //     'https://studio.apollographql.com'
-  //   ],
-  //   credentials: false,
-  // });
+  app.enableCors({
+    origin: [
+      'http://localhost:3000',
+      'https://studio.apollographql.com'
+    ],
+    credentials: false,
+  });
   app.setGlobalPrefix('api');
   app.use(passport.initialize());
   app.use(
@@ -29,6 +28,7 @@ async function bootstrap() {
       secret: process.env.COOKIE_SECRET,
       resave: false,
       saveUninitialized: false,
+      name: 'gp-tech-checklist',
       store: new TypeormStore().connect(sessionRepo),
     }),
   );
