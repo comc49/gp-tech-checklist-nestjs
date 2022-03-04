@@ -61,7 +61,8 @@ type Challenge {
 
 type Query {
   users: [User!]!
-  user(id: Int!): User!
+  user(email: String!): User!
+  categories: [Category!]!
   category(id: Int!): Category!
   checklist(id: Int!): Checklist!
   checklistItem(id: Int!): ChecklistItem!
