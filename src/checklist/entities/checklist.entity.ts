@@ -25,7 +25,7 @@ export class Checklist {
 
   @ManyToOne(() => Category, category => category.checklists)
   @Field(() => Category, {nullable: true})
-  category: Category;
+  category?: Category;
 
   @ManyToOne(() => User, user => user.checklists)
   @Field(() => User, {nullable: true})
