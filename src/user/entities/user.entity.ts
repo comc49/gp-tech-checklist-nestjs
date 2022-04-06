@@ -30,7 +30,7 @@ export class User {
   accessToken: string;
 
   @OneToMany(() => Checklist, checklist => checklist.user )
-  @Field(() => [Checklist], {nullable: 'itemsAndList'})
+  @Field(() => [Checklist], {nullable: 'items'})
   checklists: Checklist[]
 
 }

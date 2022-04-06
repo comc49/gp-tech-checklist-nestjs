@@ -27,6 +27,6 @@ export class ChecklistItem {
   checklist?: Checklist
 
   @ManyToOne(() => ChecklistItem, checklistItem => checklistItem.checklist)
-  @Field(() => [ChecklistItem], {nullable: 'itemsAndList'})
-  checklists?: ChecklistItem[];
+  @Field(() => [ChecklistItem], {nullable: 'items'})
+  checklists: ChecklistItem[];
 }
