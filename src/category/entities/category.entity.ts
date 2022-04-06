@@ -19,7 +19,7 @@ export class Category {
 
 
   @OneToMany(() => Checklist, checklist => checklist.category)
-  @Field(() => [Checklist], {nullable: true})
-  checklists?: Checklist[];
+  @Field(() => [Checklist], {nullable: 'itemsAndList'})
+  checklists: Checklist[];
 
 }
