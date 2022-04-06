@@ -1,11 +1,17 @@
 import { Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm/repository/Repository';
 import { CreateChecklistInput } from './dto/create-checklist.input';
 import { UpdateChecklistInput } from './dto/update-checklist.input';
+import { Checklist } from './entities/checklist.entity';
 
 @Injectable()
 export class ChecklistService {
+  constructor(@InjectRepository(Checklist) private checklistRepository: Repository<Checklist>) {
+  }
   create(createChecklistInput: CreateChecklistInput) {
-    return 'This action adds a new checklist';
+    const newChecklist = this.checklistRepository.create(createChecklistInput);
+    return this.checklistRepository.save(newChecklist);
   }
 
   findAll() {
